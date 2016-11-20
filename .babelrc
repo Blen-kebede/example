@@ -1,0 +1,9 @@
+{
+	"presets": ["latest", "react", "stage-2"],
+	"env": {
+		"development-hot": {
+			"presets": ["react-hmre"]
+		}
+	},
+    "plugins": ["transform-decorators-legacy"]
+}
