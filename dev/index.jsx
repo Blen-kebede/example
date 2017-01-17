@@ -6,7 +6,7 @@ import config from "./config.json"
 require("./style.css")
 require('file?name=[name].[ext]!./index.html')
 let spinFile = require('file?name=[name].[ext]!./assets/spin.mp3')
-let wonFile = require('file?name=[name].[ext]!./assets/won.mp3')
+let wonFile = require('file?name=[name].[ext]!./assets/spinWin.mp3')
 
 var spinSound = new Audio(spinFile)
 var wonSound = new Audio(wonFile)
@@ -56,12 +56,12 @@ class Main extends React.Component {
       obj[wonKey].push(i)
     }
     let keys = Object.keys(obj)
+    let sound = spinSound
     
     if (keys.length != 4) {
+      sound = wonSound
       let self = this
-      setTimeout(() => {
-        wonSound.play()
-        
+      setTimeout(() => {        
         let wonReels = {}
         let { credits } = newState
         
@@ -81,15 +81,15 @@ class Main extends React.Component {
         setTimeout(() => self.setState({ won: false }), 2000)
       }, 6000)
     }
+    
+    sound.currentTime = 0
+    sound.play()
   }
   
   @autobind
   onSpin(e){
     if (this.state.cantSpin)
       return
-      
-    spinSound.currentTime = 0
-    spinSound.play()
       
     let { spinNum, credits, bet } = this.state
     spinNum++
